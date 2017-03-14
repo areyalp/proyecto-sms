@@ -26,34 +26,28 @@ public class RecibirSMS extends BroadcastReceiver  {
 
         Bundle bundle = intent.getExtras();
         SmsMessage[] mensaje = null;
-        String paquete ="";
         String texto="";
-        String prueba="";
+        String sender="";
+        String allowedSender = "4245224127";
 
         if (bundle != null){
             Object[]pdus = (Object[])bundle.get("pdus");
             mensaje = new SmsMessage[pdus.length];
             for (int i=0; i<mensaje.length; i++){
                 mensaje[i]= SmsMessage.createFromPdu((byte[])pdus[i]);
-                paquete += "SMS recibido de "+ mensaje[i].getOriginatingAddress();
-                texto= mensaje[i].getOriginatingAddress();
-                paquete += ", mensaje: ";
-                paquete += mensaje[i].getMessageBody().toString();
-                paquete += "\n";
+                sender = mensaje[i].getOriginatingAddress();
+                texto += sender + " " + mensaje[i].getMessageBody().toString();
 
             }
-            prueba=texto;
+            if(sender.contains(allowedSender)) {
+                MainActivity mainActivity = MainActivity.instance();
+                mainActivity.onMsgReceive(texto);
 
-            Toast.makeText(context,paquete,Toast.LENGTH_LONG).show();
+                Toast.makeText(context,texto,Toast.LENGTH_LONG).show();
 
-            Log.i("Luis",paquete);
-
-
+                Log.i("Luis",texto);
+            }
         }
-
-
     }
-
-
 }
 

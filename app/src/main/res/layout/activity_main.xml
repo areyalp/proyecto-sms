@@ -236,7 +236,7 @@
         android:layout_toRightOf="@+id/recibir"
         android:layout_toEndOf="@+id/recibir"
         android:layout_marginBottom="36dp"
-        android:id="@+id/textView4" />
+        android:id="@+id/textMsgReceive" />
 
 
 </RelativeLayout>
